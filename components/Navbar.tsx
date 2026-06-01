@@ -165,6 +165,10 @@ export default function Navbar() {
             })}
           </ul>
           <div className="px-6 pb-6 pt-3 flex flex-col gap-3">
+            <div className="flex items-center justify-between pb-3 border-b border-ink/10">
+              <span className="text-sm font-medium text-ink">Theme</span>
+              <ThemeToggle />
+            </div>
             <Link
               href="/cars"
               className="btn-red py-3 rounded-xl text-center text-sm"
