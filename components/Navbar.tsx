@@ -110,18 +110,21 @@ export default function Navbar() {
               </Link>
             </div>
 
-            {/* Mobile Hamburger */}
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="md:hidden p-2 rounded-lg text-ink hover:bg-ink/10 transition-colors"
-              aria-label="Toggle menu"
-            >
-              {menuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
-            </button>
+            {/* Mobile Controls */}
+            <div className="md:hidden flex items-center gap-2">
+              <ThemeToggle />
+              <button
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="p-2 rounded-lg text-ink hover:bg-ink/10 transition-colors"
+                aria-label="Toggle menu"
+              >
+                {menuOpen ? (
+                  <X className="w-6 h-6" />
+                ) : (
+                  <Menu className="w-6 h-6" />
+                )}
+              </button>
+            </div>
           </div>
         </nav>
       </header>
@@ -165,10 +168,6 @@ export default function Navbar() {
             })}
           </ul>
           <div className="px-6 pb-6 pt-3 flex flex-col gap-3">
-            <div className="flex items-center justify-between pb-3 border-b border-ink/10">
-              <span className="text-sm font-medium text-ink">Theme</span>
-              <ThemeToggle />
-            </div>
             <Link
               href="/cars"
               className="btn-red py-3 rounded-xl text-center text-sm"

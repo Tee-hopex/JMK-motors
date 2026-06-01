@@ -18,7 +18,7 @@ const slides = [
   {
     id: 2,
     image:
-      "https://images.unsplash.com/photo-1555215695-3d98c02e7ef1?auto=format&fit=crop&w=1920&q=85",
+      "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=1920&q=85",
     tag: "Foreign Used",
     headline: "Drive in Absolute",
     highlight: "Confidence",
