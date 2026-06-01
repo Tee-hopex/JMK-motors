@@ -32,7 +32,9 @@ export default function CarCard({ car, onView, onReserve }: Props) {
           fill
           className="object-cover transition-transform duration-700 group-hover:scale-105"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          quality={80}
+          quality={60}
+          loading="lazy"
+          placeholder="empty"
         />
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

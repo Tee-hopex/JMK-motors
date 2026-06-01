@@ -1,0 +1,11 @@
+.git
+.gitignore
+.env.local
+.DS_Store
+*.log
+node_modules/.cache
+.next/cache
+.vercel
+coverage
+.turbo
+.eslintcache

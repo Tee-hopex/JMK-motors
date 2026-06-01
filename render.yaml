@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: jmk-motors
+    env: node
+    plan: free
+    buildCommand: npm ci && npx prisma generate && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_OPTIONS
+        value: --max-old-space-size=512 --disable-warnings
+      - key: NODE_PRELOAD
+        value: ''
+    skipBuildCache: false
+    buildFilter:
+      ignoredPaths:
+        - .next/cache
+        - node_modules/.cache
+        - .git

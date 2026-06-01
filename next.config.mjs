@@ -6,21 +6,19 @@ const nextConfig = {
       { protocol: "https", hostname: "plus.unsplash.com" },
       { protocol: "https", hostname: "res.cloudinary.com" },
     ],
-    // Optimize image processing to reduce memory usage
-    formats: ["image/avif", "image/webp"],
+    // DISABLE optimization to reduce memory usage on Render
+    unoptimized: process.env.NODE_ENV === "production",
+    // Cache images longer
+    minimumCacheTTL: 31536000, // 1 year
   },
   // Enable SWR caching for API routes
   onDemandEntries: {
-    maxInactiveAge: 25 * 1000, // Reduce idle time
-    pagesBufferLength: 2, // Keep fewer pages in memory
+    maxInactiveAge: 15 * 1000,
+    pagesBufferLength: 2,
   },
   // Optimize for production
   swcMinify: true,
   productionBrowserSourceMaps: false,
-  // Reduce memory during build
-  experimental: {
-    esmExternals: true,
-  },
 };
 
 export default nextConfig;
