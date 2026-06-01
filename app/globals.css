@@ -1,0 +1,220 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ══════════════════════════════════════════════════════════════
+   SEMANTIC THEME TOKENS — Dark mode (default)
+   Components reference these via Tailwind classes like
+   bg-surface, text-primary, border-default — and they
+   automatically swap when .light is applied to <html>.
+══════════════════════════════════════════════════════════════ */
+:root {
+  /* Brand (constant in both themes) */
+  --gold: 212 175 55;
+  --gold-light: 232 201 74;
+  --gold-dark: 184 150 42;
+  --brand-red: 185 28 28;
+  --brand-red-hover: 153 27 27;
+
+  /* Surfaces */
+  --surface: 15 23 42;
+  --surface-2: 30 41 59;
+  --surface-3: 38 53 81;
+  --surface-4: 51 65 85;
+
+  /* Text */
+  --text-primary: 248 250 252;
+  --text-secondary: 148 163 184;
+  --text-tertiary: 100 116 139;
+  --text-on-gold: 15 23 42;
+
+  /* Overlays / glass */
+  --overlay-rgb: 0 0 0;
+  --glass-rgb: 30 41 59;
+  --glass-strong-rgb: 15 23 42;
+}
+
+/* Light mode — warm cream luxury palette */
+.light {
+  --gold: 184 150 42;
+  --gold-light: 212 175 55;
+  --gold-dark: 156 124 30;
+  --brand-red: 185 28 28;
+  --brand-red-hover: 153 27 27;
+
+  --surface: 247 243 235;
+  --surface-2: 255 252 245;
+  --surface-3: 238 232 219;
+  --surface-4: 226 218 202;
+
+  --text-primary: 26 26 46;
+  --text-secondary: 74 74 106;
+  --text-tertiary: 122 122 148;
+  --text-on-gold: 26 26 46;
+
+  --overlay-rgb: 26 26 46;
+  --glass-rgb: 255 252 245;
+  --glass-strong-rgb: 247 243 235;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: rgb(var(--surface));
+  color: rgb(var(--text-primary));
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ── Custom Scrollbar ── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: rgb(var(--surface)); }
+::-webkit-scrollbar-thumb { background: rgb(var(--gold)); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgb(var(--gold-light)); }
+
+/* ── Utility Classes ── */
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.gold-text {
+  background: linear-gradient(
+    135deg,
+    rgb(var(--gold)) 0%,
+    rgb(var(--gold-light)) 50%,
+    rgb(var(--gold)) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glass {
+  background: rgb(var(--glass-rgb) / 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgb(var(--text-secondary) / 0.1);
+}
+
+.glass-dark {
+  background: rgb(var(--glass-strong-rgb) / 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgb(var(--text-secondary) / 0.08);
+}
+
+@layer components {
+  /* ── Buttons ── */
+  .btn-gold {
+    @apply relative overflow-hidden font-semibold transition-all duration-300;
+    color: rgb(var(--text-on-gold));
+    background: linear-gradient(135deg, rgb(var(--gold)), rgb(var(--gold-dark)));
+  }
+  .btn-gold::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      135deg,
+      transparent,
+      rgba(255, 255, 255, 0.25),
+      transparent
+    );
+    transition: left 0.5s ease;
+  }
+  .btn-gold:hover::before { left: 100%; }
+  .btn-gold:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 25px rgb(var(--gold) / 0.4);
+  }
+
+  .btn-red {
+    @apply font-semibold text-white transition-all duration-300;
+    background: rgb(var(--brand-red));
+  }
+  .btn-red:hover {
+    background: rgb(var(--brand-red-hover));
+    transform: translateY(-1px);
+    box-shadow: 0 8px 25px rgb(var(--brand-red) / 0.4);
+  }
+
+  .btn-outline {
+    @apply border font-semibold transition-all duration-300;
+    color: rgb(var(--text-primary));
+    border-color: rgb(var(--text-primary) / 0.25);
+  }
+  .btn-outline:hover {
+    background: rgb(var(--text-primary) / 0.08);
+    transform: translateY(-1px);
+  }
+
+  /* ── Headings ── */
+  .section-heading {
+    @apply text-3xl md:text-4xl font-bold font-display;
+    color: rgb(var(--text-primary));
+  }
+  .section-subheading {
+    @apply text-lg mt-3 max-w-2xl;
+    color: rgb(var(--text-secondary));
+  }
+}
+
+/* ── Scroll Reveal ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* ── Car Card Hover ── */
+.car-card {
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.car-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 30px 60px rgb(var(--overlay-rgb) / 0.5),
+    0 0 0 1px rgb(var(--gold) / 0.3);
+}
+
+/* ── Navbar glass ── */
+.navbar-scrolled {
+  background: rgb(var(--glass-strong-rgb) / 0.95) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgb(var(--gold) / 0.15);
+  box-shadow: 0 4px 30px rgb(var(--overlay-rgb) / 0.3);
+}
+
+/* ── WhatsApp pulse ── */
+@keyframes wa-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
+  50% { box-shadow: 0 0 0 14px rgba(37, 211, 102, 0); }
+}
+.wa-pulse { animation: wa-pulse 2.5s ease-in-out infinite; }
+
+/* ── Shimmer loading ── */
+@keyframes shimmer {
+  0% { background-position: -600px 0; }
+  100% { background-position: 600px 0; }
+}
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgb(var(--surface-2)) 25%,
+    rgb(var(--surface-3)) 50%,
+    rgb(var(--surface-2)) 75%
+  );
+  background-size: 600px 100%;
+  animation: shimmer 1.5s infinite;
+}

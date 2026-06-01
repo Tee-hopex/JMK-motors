@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "Bash(node_modules\\\\.bin\\\\next build *)",
+      "Bash(ls -la \"c:\\\\Users\\\\USER\\\\Desktop\\\\markowen\\\\Blossom_Naturals\\\\blossom-natural\\\\\" | head -30)",
+      "Read(//c/Users/USER/Desktop/markowen/Blossom_Naturals/**)"
+    ]
+  }
+}
