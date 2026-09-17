@@ -2,17 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getAdminFromRequest, unauthorizedResponse } from "@/lib/auth";
 
-export async function GET(req: NextRequest) {
-  const admin = await getAdminFromRequest(req);
-  if (!admin) return unauthorizedResponse();
-
+export async function GET() {
   try {
     const settings = await prisma.siteSetting.findMany();
     const map = Object.fromEntries(settings.map((s) => [s.key, s.value]));
     return NextResponse.json(map);
   } catch (error) {
     console.error("[GET /api/settings]", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json({});
   }
 }
 

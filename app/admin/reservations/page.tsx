@@ -30,7 +30,14 @@ export default function AdminReservationsPage() {
     setLoading(true);
     try {
       const res = await fetch("/api/reservations");
-      setReservations(await res.json());
+      if (res.ok) {
+        const data = await res.json();
+        setReservations(Array.isArray(data) ? data : []);
+      } else {
+        setReservations([]);
+      }
+    } catch {
+      setReservations([]);
     } finally {
       setLoading(false);
     }

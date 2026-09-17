@@ -17,9 +17,9 @@ export default function FeaturedCars() {
 
   useEffect(() => {
     fetch("/api/cars?featured=true")
-      .then((r) => r.json())
-      .then(setCars)
-      .catch(() => {})
+      .then((r) => (r.ok ? r.json() : []))
+      .then((data) => setCars(Array.isArray(data) ? data : []))
+      .catch(() => setCars([]))
       .finally(() => setLoading(false));
   }, []);
 
@@ -88,18 +88,24 @@ export default function FeaturedCars() {
                   </div>
                 </div>
               ))
-            : cars.map((car) => (
-                <div
-                  key={car.id}
-                  className="flex-shrink-0 w-[280px] sm:w-[300px] md:w-auto"
-                >
-                  <CarCard
-                    car={car}
-                    onView={setSelectedCar}
-                    onReserve={setReserveCar}
-                  />
+            : cars.length === 0 ? (
+                <div className="col-span-full py-12 text-center text-silver text-sm">
+                  No featured vehicles available at the moment.
                 </div>
-              ))}
+              ) : (
+                cars.map((car) => (
+                  <div
+                    key={car.id}
+                    className="flex-shrink-0 w-[280px] sm:w-[300px] md:w-auto"
+                  >
+                    <CarCard
+                      car={car}
+                      onView={setSelectedCar}
+                      onReserve={setReserveCar}
+                    />
+                  </div>
+                ))
+              )}
         </div>
 
         {/* CTA */}

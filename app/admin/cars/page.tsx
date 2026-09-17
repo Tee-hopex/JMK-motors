@@ -58,7 +58,14 @@ export default function AdminCarsPage() {
     setLoading(true);
     try {
       const res = await fetch("/api/cars");
-      setCars(await res.json());
+      if (res.ok) {
+        const data = await res.json();
+        setCars(Array.isArray(data) ? data : []);
+      } else {
+        setCars([]);
+      }
+    } catch {
+      setCars([]);
     } finally {
       setLoading(false);
     }

@@ -28,11 +28,14 @@ export default function DashboardPage() {
           fetch("/api/reservations"),
           fetch("/api/messages"),
         ]);
-        const [cars, reservations, messages] = await Promise.all([
-          carsRes.json(),
-          reservRes.json(),
-          msgRes.json(),
+        const [carsData, reservData, msgData] = await Promise.all([
+          carsRes.ok ? carsRes.json() : [],
+          reservRes.ok ? reservRes.json() : [],
+          msgRes.ok ? msgRes.json() : [],
         ]);
+        const cars = Array.isArray(carsData) ? carsData : [];
+        const reservations = Array.isArray(reservData) ? reservData : [];
+        const messages = Array.isArray(msgData) ? msgData : [];
         setStats({
           totalCars: cars.length,
           featuredCars: cars.filter((c: { featured: boolean }) => c.featured).length,
@@ -41,7 +44,7 @@ export default function DashboardPage() {
           pendingReservations: reservations.filter((r: { status: string }) => r.status === "pending").length,
           totalMessages: messages.length,
           unreadMessages: messages.filter((m: { read: boolean }) => !m.read).length,
-          totalValue: cars.reduce((sum: number, c: { price: number }) => sum + c.price, 0),
+          totalValue: cars.reduce((sum: number, c: { price: number }) => sum + (c.price || 0), 0),
         });
       } catch {
         console.error("Failed to load stats");

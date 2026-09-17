@@ -23,7 +23,14 @@ export default function AdminMessagesPage() {
     setLoading(true);
     try {
       const res = await fetch("/api/messages");
-      setMessages(await res.json());
+      if (res.ok) {
+        const data = await res.json();
+        setMessages(Array.isArray(data) ? data : []);
+      } else {
+        setMessages([]);
+      }
+    } catch {
+      setMessages([]);
     } finally {
       setLoading(false);
     }

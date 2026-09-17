@@ -30,9 +30,9 @@ export default function CarsPage() {
 
   useEffect(() => {
     fetch("/api/cars")
-      .then((r) => r.json())
-      .then(setAllCars)
-      .catch(() => {})
+      .then((r) => (r.ok ? r.json() : []))
+      .then((data) => setAllCars(Array.isArray(data) ? data : []))
+      .catch(() => setAllCars([]))
       .finally(() => setLoading(false));
   }, []);
 
